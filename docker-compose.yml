@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+
+  # запуск тестов
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    image: backup-system:latest
+    container_name: backup_tests
+    environment:
+      - QT_QPA_PLATFORM=offscreen
+    command: ./run_tests.sh
+
+  # запуск приложения (GUI через offscreen)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    image: backup-system:latest
+    container_name: backup_app
+    environment:
+      - QT_QPA_PLATFORM=offscreen
+    command: ./backup_system
